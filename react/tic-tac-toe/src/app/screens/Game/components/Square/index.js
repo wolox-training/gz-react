@@ -1,12 +1,21 @@
-/* eslint-disable react/prop-types */
-import React from 'react';
+import React, { Component } from 'react';
 
 import styles from './styles.module.scss';
 
-const Square = (props) => (
-  <button type="button" className={styles.square}>
-    { props.value }
-  </button>
-);
+class Square extends Component {
+  state = {
+    value: null
+  }
+
+  handleChangeState = () => this.setState({ value: 'X' })
+
+  render() {
+    return (
+      <button type="button" className={styles.square} onClick={this.handleChangeState}>
+        { this.state.value }
+      </button>
+    );
+  }
+}
 
 export default Square;
