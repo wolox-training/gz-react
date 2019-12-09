@@ -8,8 +8,7 @@ import styles from './styles.module.scss';
 
 class Board extends Component {
   renderSquare(i) {
-    // eslint-disable-next-line react/jsx-no-bind
-    return <Square value={this.props.squares[i]} onClick={() => this.props.onClick(i)} />;
+    return <Square value={this.props.squares[i]} position={i} onClick={this.props.onClick} />;
   }
 
   render() {
