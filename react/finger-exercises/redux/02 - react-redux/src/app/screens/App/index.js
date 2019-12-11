@@ -20,7 +20,7 @@ class App extends Component {
 
   // TODO to implement the dispatch
   onSearch = value => {
-    console.log(value);
+    this.props.searchBooks(value);
   };
 
   // TODO to implement the dispatch
@@ -85,11 +85,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getBooks: () => dispatch(actionsCreators.getBooks())
+  getBooks: () => dispatch(actionsCreators.getBooks()),
+  searchBooks: value => dispatch(actionsCreators.searchBook(value))
 });
 
 App.propTypes = {
   getBooks: func,
+  searchBooks: func,
   books: arrayOf(bookPropType),
   bookSelected: bookPropType
 };
