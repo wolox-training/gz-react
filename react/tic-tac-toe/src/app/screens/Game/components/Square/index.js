@@ -1,27 +1,24 @@
 import React, { Component } from 'react';
-import { string, func, number } from 'prop-types';
+import { PropTypes } from 'prop-types';
 
 import styles from './styles.module.scss';
 
 class Square extends Component {
-  handleClick = () => {
-    this.props.onClick(this.props.position);
-  }
+  handleClick = () => this.props.onClick(this.props.position);
 
   render() {
-    const { value } = this.props;
     return (
       <button type="button" className={styles.square} onClick={this.handleClick}>
-        {value}
+        {this.props.value}
       </button>
     );
   }
 }
 
 Square.propTypes = {
-  position: number,
-  value: string,
-  onClick: func
+  position: PropTypes.number.isRequired,
+  value: PropTypes.string,
+  onClick: PropTypes.func
 };
 
 export default Square;

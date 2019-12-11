@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import { func } from 'prop-types';
+import { PropTypes } from 'prop-types';
 
 import Square from '../Square';
 
 import styles from './styles.module.scss';
-
+import { squarePropTypes } from './proptypes';
 
 class Board extends Component {
-  renderSquare(i) {
-    return <Square value={this.props.squares[i]} position={i} onClick={this.props.onClick} />;
-  }
+  renderSquare = (i) => <Square value={this.props.squares[i]} position={i} onClick={this.props.onClick} />;
 
   render() {
     return (
@@ -35,8 +33,8 @@ class Board extends Component {
 }
 
 Board.propTypes = {
-  squares: Array,
-  onClick: func
+  squares: PropTypes.arrayOf(squarePropTypes).isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default Board;
