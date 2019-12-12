@@ -30,7 +30,7 @@ class App extends Component {
 
   // TODO to implement the dispatch
   addItem = itemId => {
-    console.log(itemId);
+    this.props.addItem(itemId);
   };
 
   // TODO to implement the dispatch
@@ -88,7 +88,8 @@ const mapDispatchToProps = dispatch => ({
   getBooks: () => dispatch(actionsCreators.getBooks()),
   searchBooks: value => dispatch(actionsCreators.searchBook(value)),
   addToCart: item => dispatch(actionsCreators.addToCart(item)),
-  removeItem: itemId => dispatch(actionsCreators.removeItem(itemId))
+  removeItem: itemId => dispatch(actionsCreators.removeItem(itemId)),
+  addItem: itemId => dispatch(actionsCreators.addItem(itemId))
 });
 
 App.propTypes = {
@@ -96,6 +97,7 @@ App.propTypes = {
   searchBooks: func,
   addToCart: func,
   removeItem: func,
+  addItem: func,
   books: arrayOf(bookPropType),
   bookSelected: bookPropType
 };

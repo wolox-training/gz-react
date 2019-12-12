@@ -12,8 +12,15 @@ function reducer(state = initialState, action) {
       return { ...state, books: action.payload, originalData: action.payload };
     case actions.ADD_TO_CART:
       return { ...state, bookSelected: [...state.bookSelected, action.payload] };
-    case actions.ADD_ITEM: // TODO to implement the logic
-      return { ...state };
+    case actions.ADD_ITEM: {
+      const books = [...state.bookSelected];
+      const book = books.find(({ id }) => id === action.payload);
+      book.quantity += 1;
+      return {
+        ...state,
+        bookSelected: books
+      };
+    }
     case actions.REMOVE_ITEM:
       return { ...state, bookSelected: [...state.bookSelected.filter(book => book.id !== action.payload)] };
     case actions.SEARCH_ITEM:
