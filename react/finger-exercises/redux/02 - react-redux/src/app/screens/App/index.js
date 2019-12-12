@@ -6,7 +6,7 @@ import Footer from '@components/Footer';
 import { func, arrayOf } from 'prop-types';
 import { bookPropType } from '@constants/propTypes';
 
-import actionsCreators, { actions } from '../../../redux/book/actions';
+import actionsCreators from '../../../redux/book/actions';
 
 import Book from './components/Book';
 import Search from './components/Search';
