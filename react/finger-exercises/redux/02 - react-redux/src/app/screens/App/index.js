@@ -6,7 +6,7 @@ import Footer from '@components/Footer';
 import { func, arrayOf } from 'prop-types';
 import { bookPropType } from '@constants/propTypes';
 
-import actionsCreators from '../../../redux/book/actions';
+import actionsCreators, { actions } from '../../../redux/book/actions';
 
 import Book from './components/Book';
 import Search from './components/Search';
@@ -25,7 +25,7 @@ class App extends Component {
 
   // TODO to implement the dispatch
   addToCart = item => {
-    console.log(item);
+    this.props.addToCart(item);
   };
 
   // TODO to implement the dispatch
@@ -35,7 +35,7 @@ class App extends Component {
 
   // TODO to implement the dispatch
   removeItem = itemId => {
-    console.log(itemId);
+    this.props.removeItem(itemId);
   };
 
   CONFIGURATION_BUTTON = {
@@ -86,12 +86,16 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getBooks: () => dispatch(actionsCreators.getBooks()),
-  searchBooks: value => dispatch(actionsCreators.searchBook(value))
+  searchBooks: value => dispatch(actionsCreators.searchBook(value)),
+  addToCart: item => dispatch(actionsCreators.addToCart(item)),
+  removeItem: itemId => dispatch(actionsCreators.removeItem(itemId))
 });
 
 App.propTypes = {
   getBooks: func,
   searchBooks: func,
+  addToCart: func,
+  removeItem: func,
   books: arrayOf(bookPropType),
   bookSelected: bookPropType
 };
