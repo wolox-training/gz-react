@@ -8,7 +8,8 @@ const initialState = {
   }],
   stepNumber: 0,
   xIsNext: true,
-  matches: []
+  matches: [],
+  isLoading: false
 };
 
 function reducer(state = initialState, action) {
@@ -26,7 +27,9 @@ function reducer(state = initialState, action) {
     case actions.JUMP_TO:
       return { ...state, stepNumber: action.payload, xIsNext: action.payload % 2 === 0 };
     case actions.GET_MATCH_HISTORY:
-      return { ...state, matches: action.payload.data };
+      return { ...state, matches: action.payload.data, isLoading: false };
+    case actions.SET_LOADING:
+      return { ...state, isLoading: action.payload };
     default:
       return state;
   }

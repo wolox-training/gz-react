@@ -14,6 +14,7 @@ import MatchHistory from './components/MatchHistory';
 
 class Game extends Component {
   componentDidMount() {
+    this.props.setLoading(true);
     matches.getMatches()
       .then(response => this.props.getMatchHistory(response));
   }
@@ -31,7 +32,7 @@ class Game extends Component {
   });
 
   render() {
-    const { history, stepNumber, xIsNext, matchHistory } = this.props;
+    const { history, stepNumber, xIsNext, matchHistory, isLoading } = this.props;
     const squares = history[stepNumber].squares.slice();
     const winner = getWinner(squares);
     const moves = this.getMoves(history);
@@ -49,7 +50,7 @@ class Game extends Component {
           <ol>{moves}</ol>
         </div>
         <div className={styles.matchHistory}>
-          <MatchHistory matches={matchHistory} />
+          <MatchHistory matches={matchHistory} isLoading={isLoading} />
         </div>
       </div>
     );
@@ -60,21 +61,25 @@ const mapStateToProps = state => ({
   history: state.history,
   stepNumber: state.stepNumber,
   xIsNext: state.xIsNext,
-  matchHistory: state.matches
+  matchHistory: state.matches,
+  isLoading: state.isLoading
 });
 
 const mapDispatchToProps = dispatch => ({
   setBoard: index => dispatch(actionsCreators.setBoard(index)),
   jumpTo: value => dispatch(actionsCreators.jumpTo(value)),
-  getMatchHistory: response => dispatch(actionsCreators.getMatchHistory(response))
+  getMatchHistory: response => dispatch(actionsCreators.getMatchHistory(response)),
+  setLoading: loading => dispatch(actionsCreators.setLoading(loading))
 });
 
 Game.propTypes = {
   getMatchHistory: func,
   history: arrayOf(arrayOf(string)),
+  isLoading: bool,
   jumpTo: func,
   matchHistory: arrayOf(matchPropType),
   setBoard: func,
+  setLoading: func,
   stepNumber: number,
   xIsNext: bool
 };
