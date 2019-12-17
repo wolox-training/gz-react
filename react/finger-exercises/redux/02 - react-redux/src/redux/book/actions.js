@@ -23,17 +23,17 @@ const actionsCreators = {
     type: actions.ADD_TO_CART,
     payload: item
   }),
-  addItem: itemId => ({
+  addItem: books => ({
     type: actions.ADD_ITEM,
-    payload: itemId
+    payload: books
   }),
-  removeItem: itemId => ({
+  removeItem: books => ({
     type: actions.REMOVE_ITEM,
-    payload: itemId
+    payload: books
   }),
-  searchBook: value => ({
+  searchBook: books => ({
     type: actions.SEARCH_ITEM,
-    payload: value
+    payload: books
   })
 };
 

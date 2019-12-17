@@ -7,10 +7,10 @@ export const bookSelectedPropType = shape({
 });
 
 export const bookPropType = shape({
-  id: number,
-  name: string,
-  author: string,
-  year: number,
-  image: string,
-  summary: string
+  id: number.isRequired,
+  name: string.isRequired,
+  author: string.isRequired,
+  year: number.isRequired,
+  image: string.isRequired,
+  summary: string.isRequired
 });

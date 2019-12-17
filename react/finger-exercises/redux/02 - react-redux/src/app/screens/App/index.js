@@ -14,28 +14,25 @@ import ShoppingCart from './components/ShoppingCart';
 import styles from './styles.scss';
 
 class App extends Component {
-  componentDidMount() {
-    this.props.getBooks();
-  }
+  componentDidMount = () => this.props.getBooks();
 
-  // TODO to implement the dispatch
   onSearch = value => {
-    this.props.searchBooks(value);
+    const books = this.props.originalData.filter(book => book.name.toLowerCase().includes(value));
+    this.props.searchBooks(books);
   };
 
-  // TODO to implement the dispatch
-  addToCart = item => {
-    this.props.addToCart(item);
-  };
+  addToCart = item => this.props.addToCart(item);
 
-  // TODO to implement the dispatch
   addItem = itemId => {
-    this.props.addItem(itemId);
+    const books = [...this.props.bookSelected];
+    const book = books.find(({ id }) => id === itemId);
+    book.quantity += 1;
+    this.props.addItem(books);
   };
 
-  // TODO to implement the dispatch
   removeItem = itemId => {
-    this.props.removeItem(itemId);
+    const books = this.props.bookSelected.filter(book => book.id !== itemId);
+    this.props.removeItem(books);
   };
 
   CONFIGURATION_BUTTON = {
@@ -57,22 +54,23 @@ class App extends Component {
   };
 
   render() {
+    const { books, bookSelected } = this.props;
     return (
       <Fragment>
         <Navbar />
         <div className={styles.container}>
           <Search onSearch={this.onSearch} />
-          {this.props.books.length ? (
-            this.props.books.map(this.renderBooks)
+          {books.length ? (
+            books.map(this.renderBooks)
           ) : (
             <div className={styles.noData}>
               <h2 className={styles.title}>No Data</h2>
             </div>
           )}
         </div>
-        {this.props.bookSelected.length ? (
-          <ShoppingCart data={this.props.bookSelected} addItem={this.addItem} removeItem={this.removeItem} />
-        ) : null}
+        {!!bookSelected.length && (
+          <ShoppingCart data={bookSelected} addItem={this.addItem} removeItem={this.removeItem} />
+        )}
         <Footer />
       </Fragment>
     );
@@ -81,7 +79,8 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   books: state.books,
-  bookSelected: state.bookSelected
+  bookSelected: state.bookSelected,
+  originalData: state.originalData
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -93,13 +92,14 @@ const mapDispatchToProps = dispatch => ({
 });
 
 App.propTypes = {
-  getBooks: func,
-  searchBooks: func,
-  addToCart: func,
-  removeItem: func,
-  addItem: func,
+  getBooks: func.isRequired,
+  searchBooks: func.isRequired,
+  addToCart: func.isRequired,
+  removeItem: func.isRequired,
+  addItem: func.isRequired,
   books: arrayOf(bookPropType),
-  bookSelected: bookPropType
+  bookSelected: bookPropType,
+  originalData: arrayOf(bookPropType)
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
