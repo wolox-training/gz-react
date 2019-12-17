@@ -21,7 +21,7 @@ function reducer(state = initialState, action) {
         return state;
       }
       squares[action.payload] = xIsNext ? 'X' : 'O';
-      return { history: [...newHistory, { squares }], stepNumber: newHistory.length, xIsNext: !xIsNext };
+      return { ...state, history: [...newHistory, { squares }], stepNumber: newHistory.length, xIsNext: !xIsNext };
     }
     case actions.JUMP_TO:
       return { ...state, stepNumber: action.payload, xIsNext: action.payload % 2 === 0 };
