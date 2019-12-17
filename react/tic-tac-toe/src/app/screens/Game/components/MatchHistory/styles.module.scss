@@ -1,0 +1,30 @@
+.list {
+  padding: 0;
+}
+
+.loser {
+  background: rgba(255, 0, 0, 0.4);
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  width: 40px;
+}
+
+.tie {
+  background: rgba(255, 255, 0, 0.4);
+  font-style: italic;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  width: 40px;
+}
+
+.winner {
+  background: rgba(0, 255, 0, 0.4);
+  color: black;
+  font-weight: bold;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  width: 40px;
+}
