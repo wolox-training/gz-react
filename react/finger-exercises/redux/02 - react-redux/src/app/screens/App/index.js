@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable no-console */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
@@ -17,22 +18,25 @@ class App extends Component {
   componentDidMount = () => this.props.getBooks();
 
   onSearch = value => {
-    const books = this.props.originalData.filter(book => book.name.toLowerCase().includes(value));
-    this.props.searchBooks(books);
+    const { originalData, searchBooks } = this.props;
+    const books = originalData.filter(book => book.name.toLowerCase().includes(value));
+    searchBooks(books);
   };
 
   addToCart = item => this.props.addToCart(item);
 
   addItem = itemId => {
-    const books = [...this.props.bookSelected];
+    const { addItem, bookSelected } = this.props;
+    const books = [...bookSelected];
     const book = books.find(({ id }) => id === itemId);
-    book.quantity += 1;
-    this.props.addItem(books);
+    book.quantity++;
+    addItem(books);
   };
 
   removeItem = itemId => {
-    const books = this.props.bookSelected.filter(book => book.id !== itemId);
-    this.props.removeItem(books);
+    const { removeItem, bookSelected } = this.props;
+    const books = bookSelected.filter(book => book.id !== itemId);
+    removeItem(books);
   };
 
   CONFIGURATION_BUTTON = {
