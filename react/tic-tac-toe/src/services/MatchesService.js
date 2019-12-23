@@ -1,5 +1,5 @@
 import api from '../config/api';
 
-export default {
-  getMatches: () => api.get('/matches')
-};
+const getMatches = () => api.get('/matches');
+
+export default getMatches;

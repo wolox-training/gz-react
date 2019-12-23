@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { func, number, bool, arrayOf, string } from 'prop-types';
 
-import matches from '../../../services/MatchesService';
+import getMatches from '../../../services/MatchesService';
 import actionsCreators from '../../../redux/match/actions';
 import { matchPropType } from '../../../constants/propTypes';
 
@@ -14,12 +14,13 @@ import MatchHistory from './components/MatchHistory';
 
 class Game extends Component {
   componentDidMount() {
-    this.props.setLoading(true);
-    matches.getMatches()
-      .then(response => this.props.getMatchHistory(response));
+    const { setLoading, getMatchHistory } = this.props;
+    setLoading(true);
+    getMatches()
+      .then(response => getMatchHistory(response));
   }
 
-  handleJumpTo = e => this.props.jumpTo(e.target.value);
+  handleJumpTo = ({ target: { value } }) => this.props.jumpTo(value);
 
   handleClick = i => this.props.setBoard(i);
 
@@ -33,7 +34,7 @@ class Game extends Component {
 
   render() {
     const { history, stepNumber, xIsNext, matchHistory, isLoading } = this.props;
-    const squares = history[stepNumber].squares.slice();
+    const squares = [...history[stepNumber].squares];
     const winner = getWinner(squares);
     const moves = this.getMoves(history);
     const status = winner ? `Winner: ${winner}` : `Next player: ${xIsNext ? 'X' : 'O'}`;
@@ -73,13 +74,13 @@ const mapDispatchToProps = dispatch => ({
 });
 
 Game.propTypes = {
-  getMatchHistory: func,
+  getMatchHistory: func.isRequired,
+  jumpTo: func.isRequired,
+  setBoard: func.isRequired,
+  setLoading: func.isRequired,
   history: arrayOf(arrayOf(string)),
   isLoading: bool,
-  jumpTo: func,
   matchHistory: arrayOf(matchPropType),
-  setBoard: func,
-  setLoading: func,
   stepNumber: number,
   xIsNext: bool
 };

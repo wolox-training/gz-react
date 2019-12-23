@@ -4,14 +4,15 @@ import { arrayOf, bool } from 'prop-types';
 import Spinner from 'react-spinkit';
 
 import { matchPropType } from '../../../../../constants/propTypes';
+import { PLAYER_ONE, TIE } from '../../../../../constants/gameConstants';
 
 import styles from './styles.module.scss';
 
 class MatchHistory extends Component {
   renderMatches() {
     return this.props.matches.map((match, index) => {
-      const playerOneClass = match.winner === 'tie' ? styles.tie : match.winner === 'player_one' ? styles.winner : styles.loser;
-      const playerTwoClass = match.winner === 'tie' ? styles.tie : match.winner === 'player_one' ? styles.loser : styles.winner;
+      const playerOneClass = match.winner === TIE ? styles.tie : match.winner === PLAYER_ONE ? styles.winner : styles.loser;
+      const playerTwoClass = match.winner === TIE ? styles.tie : match.winner === PLAYER_ONE ? styles.loser : styles.winner;
       return (
         <li key={`move_${index + 1}`}>
           <span className={playerOneClass}>{match.player_one}</span>
