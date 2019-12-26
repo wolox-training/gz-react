@@ -12,7 +12,7 @@ const initialState = {
   isLoading: false
 };
 
-function reducer(state = initialState, action) {
+function matches(state = initialState, action) {
   switch (action.type) {
     case actions.SET_BOARD: {
       const { history, stepNumber, xIsNext } = state;
@@ -35,4 +35,4 @@ function reducer(state = initialState, action) {
   }
 }
 
-export default reducer;
+export default matches;
