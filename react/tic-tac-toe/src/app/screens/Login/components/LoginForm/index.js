@@ -8,9 +8,7 @@ import CustomInput from '../CustomInput';
 import { defaultEmailValidation, defaultPasswordValidation } from './utils';
 import styles from './styles.scss';
 
-
-const LoginForm = props => {
-  const { handleSubmit } = props;
+function LoginForm({ handleSubmit }) {
   return (
     <form onSubmit={handleSubmit} className={styles.column}>
       <Field name="email" component={CustomInput} validate={defaultEmailValidation} type="email" label="Email" />
@@ -18,7 +16,7 @@ const LoginForm = props => {
       <button type="submit" className={styles.submit}>Submit</button>
     </form>
   );
-};
+}
 
 LoginForm.propTypes = {
   handleSubmit: func.isRequired
