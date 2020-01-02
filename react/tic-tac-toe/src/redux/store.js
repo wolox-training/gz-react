@@ -1,10 +1,10 @@
 import { createStore, compose, combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
-import matches from './match/reducer';
+import games from './match/reducer';
 
 const reducers = combineReducers({
-  matches,
+  games,
   form: formReducer
 });
 

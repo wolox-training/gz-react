@@ -12,7 +12,7 @@ const initialState = {
   isLoading: false
 };
 
-function matches(state = initialState, action) {
+function games(state = initialState, action) {
   switch (action.type) {
     case actions.SET_BOARD: {
       const { history, stepNumber, xIsNext } = state;
@@ -35,4 +35,4 @@ function matches(state = initialState, action) {
   }
 }
 
-export default matches;
+export default games;
