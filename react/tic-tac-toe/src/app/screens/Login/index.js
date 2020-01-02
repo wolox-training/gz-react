@@ -28,9 +28,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired,
-  error: PropTypes.bool,
-  loading: PropTypes.bool
+  login: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

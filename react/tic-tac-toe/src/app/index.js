@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Game from './screens/Game';
+// import Game from './screens/Game';
 
 import '../scss/application.scss';
-import LoginForm from './screens/Login/components/LoginForm';
+import Login from './screens/Login';
 
 function App() {
-  return <LoginForm />;
+  return <Login />;
 }
 
 export default App;
