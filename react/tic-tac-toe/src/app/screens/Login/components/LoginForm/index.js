@@ -6,7 +6,8 @@ import { func } from 'prop-types';
 import CustomInput from '../CustomInput';
 
 import { defaultEmailValidation, defaultPasswordValidation } from './utils';
-import styles from './styles.module.scss';
+import styles from './styles.scss';
+
 
 const LoginForm = props => {
   const { handleSubmit } = props;
