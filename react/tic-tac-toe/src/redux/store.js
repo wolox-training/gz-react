@@ -1,6 +1,12 @@
-import { createStore, compose } from 'redux';
+import { createStore, compose, combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 
-import matches from './match/reducer';
+import games from './match/reducer';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // eslint-disable-line no-underscore-dangle
-export default createStore(matches, composeEnhancers());
+const reducers = combineReducers({
+  games,
+  form: formReducer
+});
+
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // eslint-disable-line no-underscore-dangle
+export default createStore(reducers, composeEnhancer());
