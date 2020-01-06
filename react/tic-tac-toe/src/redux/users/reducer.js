@@ -1,18 +1,17 @@
 import { actions } from './actions';
 
 const initialState = {
-  error: false,
-  loading: false
+  error: false
 };
 
 function users(state = initialState, action) {
   switch (action.type) {
     case actions.LOGIN:
-      return { ...state, loading: true };
+      return { ...state };
     case actions.LOGIN_FAILURE:
-      return { ...state, loading: false, error: true };
+      return { ...state, error: true };
     case actions.LOGIN_SUCCESS:
-      return { ...state, loading: false, error: false };
+      return { ...state, error: false };
     default:
       return state;
   }

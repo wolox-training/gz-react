@@ -14,12 +14,11 @@ class Login extends Component {
   }
 
   render() {
-    return <LoginForm onSubmit={this.handleLogin} />;
+    return <LoginForm onSubmit={this.handleLogin} hasError={this.props.error} />;
   }
 }
 
 const mapStateToProps = state => ({
-  loading: state.users.loading,
   error: state.users.error
 });
 
@@ -28,7 +27,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired
+  login: PropTypes.func.isRequired,
+  error: PropTypes.bool
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

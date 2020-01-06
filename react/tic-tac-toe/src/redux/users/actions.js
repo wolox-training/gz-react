@@ -1,4 +1,8 @@
+import { push } from 'connected-react-router';
+
 import login from '../../services/UsersService';
+import api from '../../config/api';
+
 
 export const actions = {
   LOGIN: '@@LOGIN/LOGIN',
@@ -12,6 +16,9 @@ const actionsCreators = {
     const response = await login(data);
     if (response.ok) {
       dispatch({ type: actions.LOGIN_SUCCESS });
+      localStorage.setItem('token', response.data.token);
+      api.setHeader('token', response.data.token);
+      dispatch(push('/game'));
     } else {
       dispatch({ type: actions.LOGIN_FAILURE });
     }
