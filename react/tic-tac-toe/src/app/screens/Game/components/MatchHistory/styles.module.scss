@@ -1,0 +1,32 @@
+@import '../../../../../scss/colors';
+
+.list {
+  padding: 0;
+}
+
+.loser {
+  background: $red-04;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  width: 40px;
+}
+
+.tie {
+  background: $yellow-04;
+  font-style: italic;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  width: 40px;
+}
+
+.winner {
+  background: $green-04;
+  color: $black;
+  font-weight: bold;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  width: 40px;
+}

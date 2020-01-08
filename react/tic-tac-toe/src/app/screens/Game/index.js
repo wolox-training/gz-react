@@ -1,35 +1,28 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { func, number, bool, arrayOf, string } from 'prop-types';
+
+import getMatches from '../../../services/MatchesService';
+import actionsCreators from '../../../redux/match/actions';
+import { matchPropType } from '../../../constants/propTypes';
 
 import Board from './components/Board';
 import { getWinner } from './utils';
 import styles from './styles.module.scss';
+import MatchHistory from './components/MatchHistory';
+
 
 class Game extends Component {
-  state = {
-    history: [{
-      squares: Array(9).fill(null)
-    }],
-    stepNumber: 0,
-    xIsNext: true
+  componentDidMount() {
+    const { setLoading, getMatchHistory } = this.props;
+    setLoading(true);
+    getMatches()
+      .then(response => getMatchHistory(response));
   }
 
-  handleJumpTo = e => {
-    this.setState({
-      stepNumber: e.target.value,
-      xIsNext: e.target.value % 2 === 0
-    });
-  }
+  handleJumpTo = ({ target: { value } }) => this.props.jumpTo(value);
 
-  handleClick = i => {
-    const { history, stepNumber, xIsNext } = this.state;
-    const newHistory = history.slice(0, stepNumber + 1);
-    const squares = [...newHistory[newHistory.length - 1].squares];
-    if (getWinner(squares) || squares[i]) {
-      return;
-    }
-    squares[i] = xIsNext ? 'X' : 'O';
-    this.setState({ history: [...newHistory, { squares }], stepNumber: newHistory.length, xIsNext: !xIsNext });
-  }
+  handleClick = i => this.props.setBoard(i);
 
   getMoves = (history) => history.map((step, move) => {
     const desc = move ? `Go to move #${move}` : 'Go to game start';
@@ -40,16 +33,16 @@ class Game extends Component {
   });
 
   render() {
-    const { history, stepNumber, xIsNext } = this.state;
-    const current = [...history[stepNumber]];
-    const winner = getWinner(current.squares);
+    const { history, stepNumber, xIsNext, matchHistory, isLoading } = this.props;
+    const squares = [...history[stepNumber].squares];
+    const winner = getWinner(squares);
     const moves = this.getMoves(history);
     const status = winner ? `Winner: ${winner}` : `Next player: ${xIsNext ? 'X' : 'O'}`;
     return (
       <div className={styles.game}>
         <div className={styles.gameBoard}>
           <Board
-            squares={current.squares}
+            squares={squares}
             onClick={this.handleClick}
           />
         </div>
@@ -57,9 +50,39 @@ class Game extends Component {
           <div>{status}</div>
           <ol>{moves}</ol>
         </div>
+        <div className={styles.matchHistory}>
+          <MatchHistory matches={matchHistory} isLoading={isLoading} />
+        </div>
       </div>
     );
   }
 }
 
-export default Game;
+const mapStateToProps = state => ({
+  history: state.games.history,
+  stepNumber: state.games.stepNumber,
+  xIsNext: state.games.xIsNext,
+  matchHistory: state.games.matches,
+  isLoading: state.games.isLoading
+});
+
+const mapDispatchToProps = dispatch => ({
+  setBoard: index => dispatch(actionsCreators.setBoard(index)),
+  jumpTo: value => dispatch(actionsCreators.jumpTo(value)),
+  getMatchHistory: response => dispatch(actionsCreators.getMatchHistory(response)),
+  setLoading: loading => dispatch(actionsCreators.setLoading(loading))
+});
+
+Game.propTypes = {
+  getMatchHistory: func.isRequired,
+  jumpTo: func.isRequired,
+  setBoard: func.isRequired,
+  setLoading: func.isRequired,
+  history: arrayOf(arrayOf(string)),
+  isLoading: bool,
+  matchHistory: arrayOf(matchPropType),
+  stepNumber: number,
+  xIsNext: bool
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
