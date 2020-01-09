@@ -25,7 +25,7 @@ const actionsCreators = {
   logout: () => dispatch => {
     localStorage.removeItem('token');
     api.setHeaders(defaultHeaders);
-    dispatch(push('/'));
+    dispatch(push(ROUTES.LOGIN));
   }
 };
 
