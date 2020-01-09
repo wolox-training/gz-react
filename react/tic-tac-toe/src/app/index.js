@@ -16,7 +16,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <AuthRoute exact path={ROUTES.LOGIN} component={Login} redirectPath={ROUTES.GAME} loginComponent />
-          <AuthRoute path={ROUTES.GAME} component={Game} redirectPath={ROUTES.LOGIN} />
+          <AuthRoute exact path={ROUTES.GAME} component={Game} redirectPath={ROUTES.LOGIN} />
         </Switch>
       </BrowserRouter>
     </ConnectedRouter>

@@ -12,7 +12,7 @@ function AuthRoute({ component: Component, redirectPath, loginComponent, loggedI
 }
 
 const mapStateToProps = state => ({
-  loggedIn: state.users.token !== null
+  loggedIn: state.users.token
 });
 
 AuthRoute.propTypes = {

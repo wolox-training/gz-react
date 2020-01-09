@@ -12,7 +12,7 @@ function users(state = initialState, action) {
     case actions.LOGIN_FAILURE:
       return { ...state, error: true };
     case actions.LOGIN_SUCCESS:
-      return { ...state, error: false, token: localStorage.getItem('token') };
+      return { ...state, error: false, token: action.payload };
     default:
       return state;
   }
