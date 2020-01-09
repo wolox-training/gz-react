@@ -1,11 +1,22 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router';
+import { connect } from 'react-redux';
+import { bool } from 'prop-types';
 
-import { loggedIn } from '../../screens/Login/utils';
-
-
-function AuthRoute({ privateComponent: PrivateComponent, ...props }) {
-  return loggedIn() ? <Route {...props} component={PrivateComponent} /> : <Redirect to="/" />;
+function AuthRoute({ component: Component, redirectPath, loginComponent, loggedIn, ...props }) {
+  let route = loggedIn ? <Route {...props} component={Component} /> : <Redirect to={redirectPath} />;
+  if (loginComponent) {
+    route = loggedIn ? <Redirect to={redirectPath} /> : <Route {...props} component={Component} />;
+  }
+  return route;
 }
 
-export default AuthRoute;
+const mapStateToProps = state => ({
+  loggedIn: state.users.token !== null
+});
+
+AuthRoute.propTypes = {
+  loggedIn: bool
+};
+
+export default connect(mapStateToProps)(AuthRoute);

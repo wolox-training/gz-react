@@ -1,7 +1,8 @@
 import { actions } from './actions';
 
 const initialState = {
-  error: false
+  error: false,
+  token: localStorage.getItem('token')
 };
 
 function users(state = initialState, action) {
@@ -11,7 +12,7 @@ function users(state = initialState, action) {
     case actions.LOGIN_FAILURE:
       return { ...state, error: true };
     case actions.LOGIN_SUCCESS:
-      return { ...state, error: false };
+      return { ...state, error: false, token: localStorage.getItem('token') };
     default:
       return state;
   }

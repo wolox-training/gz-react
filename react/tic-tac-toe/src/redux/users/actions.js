@@ -15,8 +15,8 @@ const actionsCreators = {
     dispatch({ type: actions.LOGIN });
     const response = await login(data);
     if (response.ok) {
-      dispatch({ type: actions.LOGIN_SUCCESS });
       localStorage.setItem('token', response.data.token);
+      dispatch({ type: actions.LOGIN_SUCCESS });
       api.setHeader('token', response.data.token);
       dispatch(push('/game'));
     } else {
