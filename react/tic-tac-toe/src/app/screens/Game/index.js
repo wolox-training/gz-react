@@ -42,7 +42,7 @@ class Game extends Component {
     return (
       <Fragment>
         <TopBar />
-        <div className={styles.game}>
+        <div className={`row ${styles.game}`}>
           <div className={styles.gameBoard}>
             <Board
               squares={squares}

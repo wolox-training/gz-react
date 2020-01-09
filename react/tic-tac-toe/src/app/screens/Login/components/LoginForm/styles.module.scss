@@ -10,23 +10,25 @@
   box-shadow: 2px 2px 13px 1px $black-07;
   height: 200px;
   margin: auto;
-  width: 400px;
-  
-  .submit {
-    align-self: center;
-    background: $dust-gray;
-    border: 1px solid $dust-gray;
-    border-radius: 5px;
-    color: white;
-    height: 30px;
-    line-height: 30px;
-    width: 100px;
-  }
+  max-width: 400px;
+  width: 100%;
+}
 
-  .title {
-    align-self: center;
-    color: $black;
-    font-size: 22px;
-    padding: 15px 0;
-  }
+.submit-button {
+  align-self: center;
+  background: $dust-gray;
+  border: 1px solid $dust-gray;
+  border-radius: 5px;
+  color: $white;
+  height: 30px;
+  line-height: 30px;
+  width: 100px;
+}
+
+.form-title {
+  align-self: center;
+  color: $black;
+  font-size: 22px;
+  margin-top: 15px;
+  padding-bottom: 15px;
 }
