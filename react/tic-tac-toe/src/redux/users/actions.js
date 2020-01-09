@@ -2,8 +2,7 @@ import { push } from 'connected-react-router';
 
 import login from '../../services/UsersService';
 import api from '../../config/api';
-
-import { ROUTES } from '~constants/gameConstants';
+import { ROUTES } from '../../constants/gameConstants';
 
 
 export const actions = {
