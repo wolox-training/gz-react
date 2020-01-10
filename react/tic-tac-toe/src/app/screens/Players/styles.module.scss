@@ -1,0 +1,20 @@
+@import "../../../scss/colors";
+
+.players-table {
+  border: 1px solid $dust-gray;
+  border-collapse: collapse;
+  margin: 25px 0 0 25px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.player-row {
+  border: 1px solid $dust-gray;
+  font-size: 12px;
+  text-align: center;
+}
+
+.go-back {
+  margin-left: 25px;
+  padding-top: 25px;
+}
