@@ -1,0 +1,10 @@
+@import '../../../../../scss/colors';
+
+.button {
+  align-self: flex-start;
+}
+
+.error-msg {
+  color: $red-04;
+  display: block;
+}
