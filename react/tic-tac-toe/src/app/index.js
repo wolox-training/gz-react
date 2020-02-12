@@ -8,6 +8,7 @@ import { ROUTES } from '../constants/gameConstants';
 import Game from './screens/Game';
 import Login from './screens/Login';
 import AuthRoute from './components/AuthRoute';
+import Players from './screens/Players';
 
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
       <BrowserRouter>
         <Switch>
           <AuthRoute exact path={ROUTES.LOGIN} component={Login} redirectPath={ROUTES.GAME} loginComponent />
-          <AuthRoute exact path={ROUTES.GAME} component={Game} redirectPath={ROUTES.LOGIN} />
+          <AuthRoute path={ROUTES.GAME} component={Game} redirectPath={ROUTES.LOGIN} />
+          <AuthRoute path={ROUTES.PLAYERS} component={Players} redirectPath={ROUTES.LOGIN} />
         </Switch>
       </BrowserRouter>
     </ConnectedRouter>

@@ -13,6 +13,8 @@ function users(state = initialState, action) {
       return { ...state, error: true };
     case actions.LOGIN_SUCCESS:
       return { ...state, error: false, token: action.payload };
+    case actions.LOGOUT:
+      return { ...state, token: null };
     default:
       return state;
   }

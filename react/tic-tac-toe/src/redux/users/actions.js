@@ -1,11 +1,14 @@
-import login from '../../services/UsersService';
-import api from '../../config/api';
+import { push } from 'connected-react-router';
 
+import { login } from '../../services/UsersService';
+import api, { defaultHeaders } from '../../config/api';
+import { ROUTES } from '../../constants/gameConstants';
 
 export const actions = {
   LOGIN: '@@LOGIN/LOGIN',
   LOGIN_FAILURE: '@@LOGIN/LOGIN_FAILURE',
-  LOGIN_SUCCESS: '@@LOGIN/LOGIN_SUCESS'
+  LOGIN_SUCCESS: '@@LOGIN/LOGIN_SUCCESS',
+  LOGOUT: '@@LOGOUT/LOGOUT'
 };
 
 const actionsCreators = {
@@ -19,6 +22,12 @@ const actionsCreators = {
     } else {
       dispatch({ type: actions.LOGIN_FAILURE });
     }
+  },
+  logout: () => dispatch => {
+    localStorage.removeItem('token');
+    dispatch({ type: actions.LOGOUT });
+    api.setHeaders(defaultHeaders);
+    dispatch(push(ROUTES.LOGIN));
   }
 };
 
