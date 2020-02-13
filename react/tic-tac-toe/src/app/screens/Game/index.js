@@ -14,9 +14,7 @@ import TopBar from './components/TopBar';
 
 class Game extends Component {
   componentDidMount() {
-    const { setLoading, getMatches } = this.props;
-    setLoading(true);
-    getMatches();
+    this.props.getMatches();
   }
 
   handleJumpTo = ({ target: { value } }) => this.props.jumpTo(value);
@@ -32,7 +30,7 @@ class Game extends Component {
   });
 
   render() {
-    const { history, stepNumber, xIsNext, matchHistory, isLoading } = this.props;
+    const { history, stepNumber, xIsNext, matchHistory, matchesLoading } = this.props;
     const squares = [...history[stepNumber].squares];
     const winner = getWinner(squares);
     const moves = this.getMoves(history);
@@ -52,7 +50,7 @@ class Game extends Component {
             <ol>{moves}</ol>
           </div>
           <div className={styles.matchHistory}>
-            <MatchHistory matches={matchHistory} isLoading={isLoading} />
+            <MatchHistory matches={matchHistory} isLoading={matchesLoading} />
           </div>
         </div>
       </Fragment>
@@ -65,7 +63,7 @@ const mapStateToProps = state => ({
   stepNumber: state.games.stepNumber,
   xIsNext: state.games.xIsNext,
   matchHistory: state.games.matches,
-  isLoading: state.games.isLoading
+  matchesLoading: state.games.matchesLoading
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -80,9 +78,8 @@ Game.propTypes = {
   getMatches: func.isRequired,
   jumpTo: func.isRequired,
   setBoard: func.isRequired,
-  setLoading: func.isRequired,
   history: arrayOf(arrayOf(string)),
-  isLoading: bool,
+  matchesLoading: bool,
   matchHistory: arrayOf(matchPropType),
   stepNumber: number,
   xIsNext: bool

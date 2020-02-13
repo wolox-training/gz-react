@@ -1,21 +1,24 @@
+import { createReducer, completeReducer, completeState } from 'redux-recompose';
+
 import { getWinner } from '../../app/screens/Game/utils';
 
 import { actions } from './actions';
 
-const initialState = {
+const stateDescription = {
   history: [{
     squares: Array(9).fill()
   }],
   stepNumber: 0,
   xIsNext: true,
-  matches: [],
-  isLoading: false,
-  matchesError: false
+  matches: []
 };
 
-function games(state = initialState, action) {
-  switch (action.type) {
-    case actions.SET_BOARD: {
+const initialState = completeState(stateDescription, ['history', 'stepNumber', 'xIsNext']);
+
+const reducerDescription = {
+  primaryActions: [actions.GET_MATCHES],
+  override: {
+    [actions.SET_BOARD]: (state, action) => {
       const { history, stepNumber, xIsNext } = state;
       const newHistory = history.slice(0, stepNumber + 1);
       const squares = [...newHistory[newHistory.length - 1].squares];
@@ -24,20 +27,9 @@ function games(state = initialState, action) {
       }
       squares[action.payload] = xIsNext ? 'X' : 'O';
       return { ...state, history: [...newHistory, { squares }], stepNumber: newHistory.length, xIsNext: !xIsNext };
-    }
-    case actions.JUMP_TO:
-      return { ...state, stepNumber: action.payload, xIsNext: action.payload % 2 === 0 };
-    case actions.SET_LOADING:
-      return { ...state, isLoading: action.payload };
-    case actions.GET_MATCHES:
-      return { ...state };
-    case actions.GET_MATCHES_FAILURE:
-      return { ...state, matches: [] };
-    case actions.GET_MATCHES_SUCCESS:
-      return { ...state, matches: action.payload.data, isLoading: false };
-    default:
-      return state;
+    },
+    [actions.JUMP_TO]: (state, action) => ({ ...state, stepNumber: action.payload, xIsNext: action.payload % 2 === 0 })
   }
-}
+};
 
-export default games;
+export default createReducer(initialState, completeReducer(reducerDescription));
