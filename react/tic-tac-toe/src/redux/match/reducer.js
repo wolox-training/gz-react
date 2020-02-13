@@ -9,7 +9,8 @@ const initialState = {
   stepNumber: 0,
   xIsNext: true,
   matches: [],
-  isLoading: false
+  isLoading: false,
+  matchesError: false
 };
 
 function games(state = initialState, action) {
@@ -26,10 +27,14 @@ function games(state = initialState, action) {
     }
     case actions.JUMP_TO:
       return { ...state, stepNumber: action.payload, xIsNext: action.payload % 2 === 0 };
-    case actions.GET_MATCH_HISTORY:
-      return { ...state, matches: action.payload.data, isLoading: false };
     case actions.SET_LOADING:
       return { ...state, isLoading: action.payload };
+    case actions.GET_MATCHES:
+      return { ...state };
+    case actions.GET_MATCHES_FAILURE:
+      return { ...state, matches: [] };
+    case actions.GET_MATCHES_SUCCESS:
+      return { ...state, matches: action.payload.data, isLoading: false };
     default:
       return state;
   }

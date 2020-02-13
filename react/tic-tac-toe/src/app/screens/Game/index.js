@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { func, number, bool, arrayOf, string } from 'prop-types';
 
-import getMatches from '../../../services/MatchesService';
 import actionsCreators from '../../../redux/match/actions';
 import { matchPropType } from '../../../constants/propTypes';
 
@@ -15,10 +14,9 @@ import TopBar from './components/TopBar';
 
 class Game extends Component {
   componentDidMount() {
-    const { setLoading, getMatchHistory } = this.props;
+    const { setLoading, getMatches } = this.props;
     setLoading(true);
-    getMatches()
-      .then(response => getMatchHistory(response));
+    getMatches();
   }
 
   handleJumpTo = ({ target: { value } }) => this.props.jumpTo(value);
@@ -74,11 +72,12 @@ const mapDispatchToProps = dispatch => ({
   setBoard: index => dispatch(actionsCreators.setBoard(index)),
   jumpTo: value => dispatch(actionsCreators.jumpTo(value)),
   getMatchHistory: response => dispatch(actionsCreators.getMatchHistory(response)),
-  setLoading: loading => dispatch(actionsCreators.setLoading(loading))
+  setLoading: loading => dispatch(actionsCreators.setLoading(loading)),
+  getMatches: () => dispatch(actionsCreators.getMatches())
 });
 
 Game.propTypes = {
-  getMatchHistory: func.isRequired,
+  getMatches: func.isRequired,
   jumpTo: func.isRequired,
   setBoard: func.isRequired,
   setLoading: func.isRequired,
