@@ -1,34 +1,38 @@
-import { push } from 'connected-react-router';
+import { completeTypes, createTypes, withPostSuccess } from 'redux-recompose';
 
 import { login } from '../../services/UsersService';
 import api, { defaultHeaders } from '../../config/api';
-import { ROUTES } from '../../constants/gameConstants';
 
-export const actions = {
-  LOGIN: '@@LOGIN/LOGIN',
-  LOGIN_FAILURE: '@@LOGIN/LOGIN_FAILURE',
-  LOGIN_SUCCESS: '@@LOGIN/LOGIN_SUCCESS',
-  LOGOUT: '@@LOGOUT/LOGOUT'
-};
+export const actions = createTypes(
+  completeTypes(['LOGIN'], ['LOGOUT']),
+  '@@LOGIN'
+);
 
 const actionsCreators = {
-  login: data => async dispatch => {
-    dispatch({ type: actions.LOGIN });
-    const response = await login(data);
-    if (response.ok) {
-      localStorage.setItem('token', response.data.token);
-      dispatch({ type: actions.LOGIN_SUCCESS, payload: response.data.token });
-      api.setHeader('token', response.data.token);
-    } else {
-      dispatch({ type: actions.LOGIN_FAILURE });
-    }
-  },
-  logout: () => dispatch => {
+  login: data => ({
+    type: actions.LOGIN,
+    service: login,
+    target: 'token',
+    payload: data,
+    injections: [
+      withPostSuccess((dispatch, response) => {
+        localStorage.setItem('token', response.data.token);
+        api.setHeader('token', response.data.token);
+      })
+    ]
+  }),
+  closeSession: () => dispatch => {
     localStorage.removeItem('token');
-    dispatch({ type: actions.LOGOUT });
     api.setHeaders(defaultHeaders);
-    dispatch(push(ROUTES.LOGIN));
-  }
+    dispatch(actionsCreators.logout());
+  },
+  logout: () => ({
+    type: actions.LOGOUT
+  })
 };
+
+/*
+
+*/
 
 export default actionsCreators;

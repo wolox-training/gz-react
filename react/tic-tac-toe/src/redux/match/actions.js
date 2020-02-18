@@ -3,7 +3,7 @@ import { completeTypes, createTypes } from 'redux-recompose';
 import getMatches from '../../services/MatchesService';
 
 export const actions = createTypes(
-  completeTypes(['GET_MATCHES'], ['SET_BOARD', 'JUMP_TO']),
+  completeTypes(['GET_MATCHES'], ['SET_BOARD', 'JUMP_TO', 'SET_STEP_NUMBER']),
   '@@MATCHES'
 );
 
@@ -13,12 +13,12 @@ const actionsCreators = {
     target: 'matches',
     service: getMatches
   }),
-  setBoard: index => ({
+  setBoard: history => ({
     type: actions.SET_BOARD,
-    payload: index
+    payload: history
   }),
-  jumpTo: value => ({
-    type: actions.JUMP_TO,
+  setStepNumber: value => ({
+    type: actions.SET_STEP_NUMBER,
     payload: value
   })
 };

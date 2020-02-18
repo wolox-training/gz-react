@@ -17,9 +17,18 @@ class Game extends Component {
     this.props.getMatches();
   }
 
-  handleJumpTo = ({ target: { value } }) => this.props.jumpTo(value);
+  handleJumpTo = ({ target: { value } }) => this.props.setStepNumber(value);
 
-  handleClick = i => this.props.setBoard(i);
+  handleClick = index => {
+    const { history, stepNumber, xIsNext } = this.props;
+    const newHistory = history.slice(0, stepNumber + 1);
+    const squares = [...newHistory[newHistory.length - 1].squares];
+    if (!(getWinner(squares) || squares[index])) {
+      squares[index] = xIsNext ? 'X' : 'O';
+      this.props.setBoard([...newHistory, { squares }]);
+      this.props.setStepNumber(newHistory.length);
+    }
+  }
 
   getMoves = (history) => history.map((step, move) => {
     const desc = move ? `Go to move #${move}` : 'Go to game start';
@@ -67,7 +76,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setBoard: index => dispatch(actionsCreators.setBoard(index)),
+  setBoard: history => dispatch(actionsCreators.setBoard(history)),
+  setStepNumber: value => dispatch(actionsCreators.setStepNumber(value)),
   jumpTo: value => dispatch(actionsCreators.jumpTo(value)),
   getMatchHistory: response => dispatch(actionsCreators.getMatchHistory(response)),
   setLoading: loading => dispatch(actionsCreators.setLoading(loading)),
@@ -76,8 +86,8 @@ const mapDispatchToProps = dispatch => ({
 
 Game.propTypes = {
   getMatches: func.isRequired,
-  jumpTo: func.isRequired,
   setBoard: func.isRequired,
+  setStepNumber: func.isRequired,
   history: arrayOf(arrayOf(string)),
   matchesLoading: bool,
   matchHistory: arrayOf(matchPropType),

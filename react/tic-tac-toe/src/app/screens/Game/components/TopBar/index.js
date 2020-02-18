@@ -24,7 +24,7 @@ class TopBar extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  logout: () => dispatch(actionsCreators.logout())
+  logout: () => dispatch(actionsCreators.closeSession())
 });
 
 TopBar.propTypes = {
