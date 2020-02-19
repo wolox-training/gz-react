@@ -5,7 +5,7 @@ import { func, arrayOf } from 'prop-types';
 import actionsCreators from '../../../redux/match/actions';
 import TopBar from '../Game/components/TopBar';
 import { matchPropType } from '../../../constants/propTypes';
-import { PLAYER_ONE, PLAYER_TWO, TIE } from '../../../constants/gameConstants';
+import { PLAYER_ONE, PLAYER_TWO, TIE, DEFAULT_PLAYER_STATES } from '../../../constants/gameConstants';
 import { history } from '../../../redux/store';
 
 import styles from './styles.module.scss';
@@ -29,21 +29,17 @@ class Players extends Component {
   }
 
   getPlayersMatches() {
-    const players = {
-      [PLAYER_ONE]: { won: 0, tie: 0, lost: 0 },
-      [PLAYER_TWO]: { won: 0, tie: 0, lost: 0 }
-    };
     this.props.matchHistory.forEach((match) => {
       const { winner, loser } = this.getMatchResult(match);
       if (winner) {
-        players[winner].won++;
-        players[loser].lost++;
+        DEFAULT_PLAYER_STATES[winner].won++;
+        DEFAULT_PLAYER_STATES[loser].lost++;
       } else {
-        players[PLAYER_ONE].tie++;
-        players[PLAYER_TWO].tie++;
+        DEFAULT_PLAYER_STATES[PLAYER_ONE].tie++;
+        DEFAULT_PLAYER_STATES[PLAYER_TWO].tie++;
       }
     });
-    return [players[PLAYER_ONE], players[PLAYER_TWO]];
+    return [DEFAULT_PLAYER_STATES[PLAYER_ONE], DEFAULT_PLAYER_STATES[PLAYER_TWO]];
   }
 
   renderPlayers() {

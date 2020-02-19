@@ -30,7 +30,7 @@ const actionsCreators = {
   getMatches: () => async dispatch => {
     const response = await getMatches();
     if (response.ok) {
-      dispatch({ type: actions.GET_MATCHES_SUCCESS, payload: response, errorMatches: false });
+      dispatch({ type: actions.GET_MATCHES_SUCCESS, payload: response });
     } else {
       dispatch({ type: actions.GET_MATCHES_FAILURE, errorMatches: true });
     }

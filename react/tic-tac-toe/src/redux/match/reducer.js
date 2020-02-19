@@ -9,8 +9,7 @@ const initialState = {
   stepNumber: 0,
   xIsNext: true,
   matches: [],
-  isLoading: false,
-  matchesError: false
+  isLoading: false
 };
 
 function games(state = initialState, action) {
@@ -32,7 +31,7 @@ function games(state = initialState, action) {
     case actions.GET_MATCHES:
       return { ...state };
     case actions.GET_MATCHES_FAILURE:
-      return { ...state, matches: [] };
+      return { ...state, matches: [], isLoading: false };
     case actions.GET_MATCHES_SUCCESS:
       return { ...state, matches: action.payload.data, isLoading: false };
     default:
