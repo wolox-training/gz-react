@@ -1,8 +1,8 @@
 /* eslint-disable no-nested-ternary */
 import React, { Component, Fragment } from 'react';
-import { arrayOf, bool } from 'prop-types';
-import Spinner from 'react-spinkit';
+import { arrayOf } from 'prop-types';
 
+import withLoading from '../../../../components/WithLoading';
 import { matchPropType } from '../../../../../constants/propTypes';
 import { PLAYER_ONE, TIE } from '../../../../../constants/gameConstants';
 
@@ -26,14 +26,13 @@ class MatchHistory extends Component {
     return (
       <Fragment>
         <h2>Match history</h2>
-        {this.props.isLoading ? <Spinner name="three-bounce" color="purple" /> : <ol className={styles.list}>{this.renderMatches()}</ol> }
+        <ol className={styles.list}>{this.renderMatches()}</ol>
       </Fragment>);
   }
 }
 
 MatchHistory.propTypes = {
-  isLoading: bool,
   matches: arrayOf(matchPropType)
 };
 
-export default MatchHistory;
+export default withLoading(MatchHistory);

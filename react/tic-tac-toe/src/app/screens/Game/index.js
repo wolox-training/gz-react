@@ -80,7 +80,6 @@ const mapDispatchToProps = dispatch => ({
   setStepNumber: value => dispatch(actionsCreators.setStepNumber(value)),
   jumpTo: value => dispatch(actionsCreators.jumpTo(value)),
   getMatchHistory: response => dispatch(actionsCreators.getMatchHistory(response)),
-  setLoading: loading => dispatch(actionsCreators.setLoading(loading)),
   getMatches: () => dispatch(actionsCreators.getMatches())
 });
 
